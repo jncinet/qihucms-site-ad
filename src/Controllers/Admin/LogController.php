@@ -4,6 +4,7 @@ namespace Qihucms\SiteAd\Controllers\Admin;
 
 use App\Admin\Controllers\Controller;
 use App\Models\User;
+use Qihucms\SiteAd\Models\SiteAd;
 use Qihucms\SiteAd\Models\SiteAdLog;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -99,9 +100,17 @@ class LogController extends Controller
                     return [$model->id => $model->username];
                 }
             })
-            ->ajax(route('admin.api.users'))
+            ->ajax(route('admin.select.user'))
             ->rules('required');
-        $form->number('site_ad_id', __('site-ad::log.site_ad_id'))->required();
+        $form->select('site_ad_id', __('site-ad::log.site_ad_id'))
+            ->options(function ($site_ad_id) {
+                $model = SiteAd::find($site_ad_id);
+                if ($model) {
+                    return [$model->id => $model->moduleable_type];
+                }
+            })
+            ->ajax(route('api.ad.select'))
+            ->required();
         $form->ip('ip', __('site-ad::log.ip'));
         $form->text('province', __('site-ad::log.province'));
         $form->text('city', __('site-ad::log.city'));

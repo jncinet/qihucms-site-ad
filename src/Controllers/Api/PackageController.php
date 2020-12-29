@@ -2,12 +2,12 @@
 
 namespace Qihucms\SiteAd\Controllers\Api;
 
-use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Controller;
 use Qihucms\SiteAd\Models\SiteAdPackage;
 use Qihucms\SiteAd\Resources\SiteAdPackage as SiteAdPackageResource;
 use Qihucms\SiteAd\Resources\SiteAdPackageCollection;
 
-class PackageController extends ApiController
+class PackageController extends Controller
 {
     /**
      * 套餐列表

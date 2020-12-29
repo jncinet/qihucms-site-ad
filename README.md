@@ -22,6 +22,55 @@ $ php artisan vendor:publish --provider="Qihucms\SiteAd\SiteAdServiceProvider"
 + 广告订单：site-ad/ads
 + 广告订单记录：site-ad/logs
 
+### 创建广告方法
+在需要添加广告的模型中添加一对一多态关联来获取广告
+```shell
+public function site_ads()
+{
+    return $this->morphOne('Qihucms\SiteAd\Models\SiteAd', 'moduleable');
+}
+```
+
+## 接口
+### 广告套餐列表
++ 请求方法 GET
++ 请求地址 site-ad/packages
++ 返回值
+```
+[
+    {
+        'id': 1,
+        'name': "套餐名称",
+        'desc': "套餐介绍",
+        'count': 1, // 时长｜次数
+        'unit': "单位",
+        'amount': 1.00, // 价格
+        'currency_type': {货币详细信息},
+    },
+    ...
+]
+```
+
+### 广告套餐详细
++ 请求方法 GET
++ 请求地址 site-ad/packages/{id=套餐ID}
++ 返回值
+```
+{
+    'id': 1,
+    'name': "套餐名称",
+    'desc': "套餐介绍",
+    'count': 1, // 时长｜次数
+    'unit': "单位",
+    'amount': 1.00, // 价格
+    'currency_type': {货币详细信息},
+}
+```
+
+### 广告订单日志列表
+### 广告订单日志详细
+### 广告订单日志创建
+
 ## 数据库
 ### 广告套餐表：site_ad_packages
 | Field             | Type      | Length    | AllowNull | Default   | Comment   |
@@ -33,7 +82,7 @@ $ php artisan vendor:publish --provider="Qihucms\SiteAd\SiteAdServiceProvider"
 | count             | int       |           |           | 1         | 次数|时长  |
 | unit              | tinyint   |           |           | 0         | 计算单位    |
 | amount            | decimal   | 8,2       |           | 0.00      | 价格       |
-| status            | tinyint   |           |           | 1         | 分类状态    |
+| status            | tinyint   |           |           | 1         | 套餐状态    |
 | created_at        | timestamp |           | Y         | NULL      | 创建时间    |
 | updated_at        | timestamp |           | Y         | NULL      | 更新时间    |
 

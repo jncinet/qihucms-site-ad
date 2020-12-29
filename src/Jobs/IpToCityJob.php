@@ -10,6 +10,11 @@ use Illuminate\Queue\SerializesModels;
 use Qihucms\SiteAd\Models\SiteAdLog;
 use Qihucms\TencentLbs\TencentLbs;
 
+/**
+ * IP转换为城市信息
+ * Class IpToCityJob
+ * @package Qihucms\SiteAd\Jobs
+ */
 class IpToCityJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -37,10 +42,10 @@ class IpToCityJob implements ShouldQueue
         if (!empty($this->adLog->ip) && empty($this->adLog->province)) {
             $result = app(TencentLbs::class)->ipLocation($this->adLog->ip);
 
-            if (isset($result['result']) && (int)$result['status'] === 0) {
-                $this->adLog->province = $result['result']['ad_info']['province'] ?: null;
-                $this->adLog->city = $result['result']['ad_info']['city'] ?: null;
-                $this->adLog->district = $result['result']['ad_info']['district'] ?: null;
+            if (isset($result['result']['ad_info']) && (int)$result['status'] === 0) {
+                $this->adLog->province = $result['result']['ad_info']['province'] ?? null;
+                $this->adLog->city = $result['result']['ad_info']['city'] ?? null;
+                $this->adLog->district = $result['result']['ad_info']['district'] ?? null;
                 $this->adLog->save();
             }
         }

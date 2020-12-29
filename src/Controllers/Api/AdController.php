@@ -2,25 +2,29 @@
 
 namespace Qihucms\SiteAd\Controllers\Api;
 
-use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Qihucms\SiteAd\Models\SiteAd;
 
-class AdController extends ApiController
+/**
+ * 广告订单通过一对一多态关联模型在对应模块创建
+ *
+ * Class AdController
+ * @package Qihucms\SiteAd\Controllers\Api
+ */
+class AdController extends Controller
 {
-    public function __construct()
-    {
-        
-    }
     /**
-     * 后台选择任务
+     * 后台选择广告订单
      *
      * @param Request $request
      * @return mixed
      */
-    public function findSiteAdByQ(Request $request)
+    public function selectAd(Request $request)
     {
         $q = $request->query('q');
-        return SiteAd::where('name', 'like', '%' . $q . '%')->select('id', 'title as text')->paginate();
+        return SiteAd::where('id', $q)
+            ->select('id', 'moduleable_type as text')
+            ->paginate();
     }
 }

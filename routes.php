@@ -4,12 +4,16 @@ use Illuminate\Routing\Router;
 
 // 接口
 Route::group([
-    'prefix' => 'site-ad',
+    'prefix' => config('qihu.site_ad_prefix', 'site-ad'),
     'namespace' => 'Qihucms\SiteAd\Controllers\Api',
     'middleware' => ['api'],
     'as' => 'api.ad.'
 ], function (Router $router) {
-//    $router->get('site-ads/{uri}', 'CarouselController@index')->name('api.carousel.index');
+    $router->get('select', 'AdController@selectAd')->name('select');
+    $router->apiResource('logs', 'LogController')
+        ->only(['index', 'show', 'store'])->middleware('auth:api');
+    $router->apiResource('packages', 'PackageController')
+        ->only(['index', 'show']);
 });
 
 // 后台管理

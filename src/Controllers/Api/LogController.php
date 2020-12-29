@@ -2,14 +2,16 @@
 
 namespace Qihucms\SiteAd\Controllers\Api;
 
-use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Qihucms\SiteAd\Jobs\IpToCityJob;
 use Qihucms\SiteAd\Models\SiteAdLog;
+use Qihucms\SiteAd\Requests\StoreAdLogRequest;
 use Qihucms\SiteAd\Resources\SiteAdLog as SiteAdLogResource;
 use Qihucms\SiteAd\Resources\SiteAdLogCollection;
 
-class LogController extends ApiController
+class LogController extends Controller
 {
     /**
      * 广告点击列表
@@ -27,11 +29,11 @@ class LogController extends ApiController
             return new SiteAdLogCollection($items);
         }
 
-        return $this->jsonResponse(['参数错误'], '', 422);
+        return $this->jsonResponse([__('site-ad::message.params_error')], '', 422);
     }
 
     /**
-     * 详细 IpToCityJob::dispatch($log);
+     * 广告订单日志详细
      *
      * @param $id
      * @return \Illuminate\Http\JsonResponse|SiteAdLogResource
@@ -40,10 +42,33 @@ class LogController extends ApiController
     {
         $item = SiteAdLog::find($id);
 
-        if ($item && $item->site_ad->user_id == \Auth::id()) {
+        if ($item && $item->site_ad->user_id == Auth::id()) {
             return new SiteAdLogResource($item);
         }
 
-        return $this->jsonResponse(['参数错误'], '', 422);
+        return $this->jsonResponse([__('site-ad::message.params_error')], '', 422);
+    }
+
+    /**
+     * 创建点击日志
+     *
+     * @param StoreAdLogRequest $request
+     * @return \Illuminate\Http\JsonResponse|SiteAdLogResource
+     */
+    public function store(StoreAdLogRequest $request)
+    {
+        $data = $request->only(['site_ad_id', 'province', 'city', 'district', 'device', 'browse', 'system', 'net_type']);
+        $data['ip'] = $request->ip();
+        $data['user_id'] = Auth::id();
+
+        if ($result = SiteAdLog::create($data)) {
+            if (!empty($result->ip) && empty($result->province) && empty($result->city)) {
+                IpToCityJob::dispatch($result);
+            }
+
+            return new SiteAdLogResource($result);
+        }
+
+        return $this->jsonResponse([__('site-ad::message.params_error')], '', 422);
     }
 }

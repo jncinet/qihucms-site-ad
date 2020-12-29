@@ -2,8 +2,6 @@
 
 namespace Qihucms\SiteAd\Resources;
 
-use App\Http\Resources\User\User;
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Qihucms\Currency\Resources\Type\Type;
 

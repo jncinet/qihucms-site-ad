@@ -68,10 +68,10 @@ class AdController extends Controller
 
         $show->field('id', __('site-ad::ad.id'));
         $show->field('site_ad_package_id', __('site-ad::ad.site_ad_package_id'))->as(function () {
-            return $this->site_ad_package ? $this->site_ad_package->name : '套餐不存在';
+            return $this->site_ad_package ? $this->site_ad_package->name : '';
         });
         $show->field('user_id', __('site-ad::ad.user_id'))->as(function () {
-            return $this->user ? $this->user->username : '会员不存在';
+            return $this->user ? $this->user->username : '';
         });
         $show->field('start_time', __('site-ad::ad.start_time'));
         $show->field('end_time', __('site-ad::ad.end_time'));
@@ -99,12 +99,12 @@ class AdController extends Controller
                     return [$model->id => $model->username];
                 }
             })
-            ->ajax(route('admin.api.users'))
+            ->ajax(route('admin.select.user'))
             ->rules('required');
         $form->select('site_ad_package_id', __('site-ad::ad.site_ad_package_id'))
             ->options(SiteAdPackage::all()->pluck('name', 'id'));
-        $form->text('moduleable_type', '广告模块命令空间地址')->required();
-        $form->number('moduleable_id', '广告模块内容ID')->required();
+        $form->text('moduleable_type', __('site-ad::ad.moduleable_type'))->required();
+        $form->number('moduleable_id', __('site-ad::ad.moduleable_id'))->required();
         $form->datetime('start_time', __('site-ad::ad.start_time'))->default(now());
         $form->datetime('end_time', __('site-ad::ad.end_time'))->default(now()->addWeeks());
         $form->number('uv', __('site-ad::ad.uv'))->default(0);

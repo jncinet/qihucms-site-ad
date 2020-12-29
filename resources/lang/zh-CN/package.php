@@ -12,5 +12,7 @@ return [
     'status' => [
         'label' => '状态',
         'value' => ['停用', '启用']
-    ]
+    ],
+    'moduleable_type' => '广告模块命令空间地址',
+    'moduleable_id' => '广告模块内容ID',
 ];

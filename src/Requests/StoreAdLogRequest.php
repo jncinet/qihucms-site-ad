@@ -4,7 +4,7 @@ namespace Qihucms\SiteAd\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAdRequest extends FormRequest
+class StoreAdLogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,22 @@ class StoreAdRequest extends FormRequest
     public function rules()
     {
         return [
-            'site_ad_package_id' => ['required', 'exists:site_ad_packages,id'],
+            'site_ad_id' => ['required', 'exists:site_ads,id'],
+            'province' => ['max:55'],
+            'city' => ['max:55'],
+            'district' => ['max:55'],
+            'device' => ['max:55'],
+            'browse' => ['max:55'],
+            'system' => ['max:55'],
+            'net_type' => ['max:10'],
         ];
     }
 
     /**
-     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
+     * @return array
      */
     public function attributes()
     {
-        return trans('site-ad::ad');
+        return trans('site-ad::log');
     }
 }

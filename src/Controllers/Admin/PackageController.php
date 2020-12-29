@@ -79,7 +79,7 @@ class PackageController extends Controller
             ->using(__('site-ad::package.unit_value'));
         $show->field('currency_type_id', __('site-ad::package.currency_type_id'))
             ->as(function () {
-                return $this->currency_type ? $this->currency_type->name : '货币不存在';
+                return $this->currency_type ? $this->currency_type->name : '';
             });
         $show->field('status', __('site-ad::package.status.label'))
             ->using(__('site-ad::package.status.value'));
