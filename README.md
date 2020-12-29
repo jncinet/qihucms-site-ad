@@ -25,9 +25,12 @@ $ php artisan vendor:publish --provider="Qihucms\SiteAd\SiteAdServiceProvider"
 ### 创建广告方法
 在需要添加广告的模型中添加一对一多态关联来获取广告
 ```shell
-public function site_ads()
-{
-    return $this->morphOne('Qihucms\SiteAd\Models\SiteAd', 'moduleable');
+...
+use Qihucms\SiteAd\Models\Adable;
+...
+class SiteAd extends Model {
+    use Adable;
+    ...
 }
 ```
 
