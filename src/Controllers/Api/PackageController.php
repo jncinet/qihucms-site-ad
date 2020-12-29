@@ -35,6 +35,6 @@ class PackageController extends Controller
             return new SiteAdPackageResource($item);
         }
 
-        return $this->jsonResponse(['套餐不存在'], '', 422);
+        return $this->jsonResponse([__('site-ad::message.package_not_fount')], '', 422);
     }
 }

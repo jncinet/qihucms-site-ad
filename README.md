@@ -68,8 +68,87 @@ public function site_ads()
 ```
 
 ### 广告订单日志列表
++ 请求方法 GET
++ 请求地址 site-ad/logs?id=2广告订单ID&limit=15每页条数，选填&page=1页码，选填
++ 返回值
+```
+{
+    "data": [
+        {
+            'id': 1,
+            'site_ad_id': 2, // 广告订单ID
+            'user_id': {会员信息},
+            'ip': "ip",
+            'province': "省",
+            'city': "市",
+            'district': "区",
+            'device': "设备"
+            'browse': "浏览器",
+            'system': "系统",
+            'net_type': "网络",
+            'created_at': "2秒前"
+        },
+        ...
+    ],
+    "meta": {},
+    "links": {},
+}
+```
+
 ### 广告订单日志详细
++ 请求方法 GET
++ 请求地址 site-ad/logs?id=2广告订单ID&limit=15每页条数，选填&page=1页码，选填
++ 返回值
+```
+{
+    'id': 1,
+    'site_ad_id': 2, // 广告订单ID
+    'user_id': {会员信息},
+    'ip': "ip",
+    'province': "省",
+    'city': "市",
+    'district': "区",
+    'device': "设备"
+    'browse': "浏览器",
+    'system': "系统",
+    'net_type': "网络",
+    'created_at': "2秒前"
+}
+```
+
 ### 广告订单日志创建
++ 请求方法 POST
++ 请求地址 site-ad/logs
++ 请求参数：
+```
+{
+    'site_ad_id': 1, // 广告订单ID
+    'province', // 省
+    'city', // 市
+    'district', // 区
+    'device', // 设备
+    'browse', // 浏览器
+    'system', // 系统
+    'net_type' // 网络
+}
+```
++ 返回值
+```
+{
+    'id': 1,
+    'site_ad_id': 2, // 广告订单ID
+    'user_id': {会员信息},
+    'ip': "ip",
+    'province': "省",
+    'city': "市",
+    'district': "区",
+    'device': "设备"
+    'browse': "浏览器",
+    'system': "系统",
+    'net_type': "网络",
+    'created_at': "2秒前"
+}
+```
 
 ## 数据库
 ### 广告套餐表：site_ad_packages
