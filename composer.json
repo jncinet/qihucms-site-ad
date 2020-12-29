@@ -1,0 +1,30 @@
+{
+  "name": "jncinet/qihucms-site-ad",
+  "description": "qihucms site ad.",
+  "keywords": [
+    "laravel",
+    "qihucms",
+    "ad"
+  ],
+  "homepage": "https://www.qihucms.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "zhangye",
+      "email": "y@qilephp.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Qihucms\\SiteAd\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Qihucms\\SiteAd\\SiteAdServiceProvider"
+      ]
+    }
+  }
+}
